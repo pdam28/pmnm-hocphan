@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Không tìm thấy trang - 404{% endblock %}
+
+{% block content %}
+<h1>Lỗi 404</h1>
+<p>{{ message }}</p>
+<p>
+    <a href="{{ url_for('book_list') }}">Quay lại danh sách sách</a> |
+    <a href="{{ url_for('index') }}">Về Trang chủ</a>
+</p>
+{% endblock %}

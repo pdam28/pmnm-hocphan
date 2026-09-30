@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Quản lý thư viện{% endblock %}</title>
+</head>
+<body>
+    <!-- Menu chung -->
+    <nav>
+        <a href="{{ url_for('index') }}">Trang chủ</a> |
+        <a href="{{ url_for('book_list') }}">Danh sách sách</a> |
+        <a href="{{ url_for('api_books') }}">API Sách</a>
+    </nav>
+    <hr>
+
+    {% block content %}{% endblock %}
+
+</body>
+</html>

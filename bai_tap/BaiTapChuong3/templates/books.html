@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Danh sách sách{% endblock %}
+
+{% block content %}
+<h1>Danh sách sách</h1>
+
+<!-- Thanh liên kết theo thể loại -->
+<p>
+    <strong>Thể loại:</strong>
+    <a href="{{ url_for('book_list') }}">Tất cả</a>
+    {% for cat in categories %}
+        | <a href="{{ url_for('book_list', category=cat) }}">{{ cat }}</a>
+    {% endfor %}
+</p>
+
+{% if selected_category %}
+    <p>Đang lọc theo: <strong>{{ selected_category }}</strong> (<a href="{{ url_for('book_list') }}">Bỏ lọc</a>)</p>
+{% endif %}
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Năm XB</th>
+            <th>Thể loại</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>
+                <a href="{{ url_for('book_detail', book_id=book.id) }}">{{ book.title }}</a>
+            </td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.year }}</td>
+            <td>{{ book.category }}</td>
+            <td>
+                {% if book.available %}
+                    Sẵn sàng
+                {% else %}
+                    Đã mượn
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
