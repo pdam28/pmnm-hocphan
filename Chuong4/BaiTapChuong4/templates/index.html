@@ -1,0 +1,21 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+    <h1>{{ shop.name }}</h1>
+    <p>Địa chỉ: {{ shop.address }}</p>
+    <p>Giờ mở cửa: {{ shop.open }}h - {{ shop.close }}h</p>
+    <p>Bây giờ là {{ hour }}h: <strong>{{ "Quán đang mở cửa" if is_open else "Quán đang đóng cửa" }}</strong></p>
+
+    <h2>Khuyến mãi</h2>
+    <ul>
+        {% for promo in promotions %}
+            <li>{{ promo }}</li>
+        {% else %}
+            <li>Hiện chưa có khuyến mãi.</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{{ url_for('index_menu') }}">👉 Xem thực đơn</a></p>
+{% endblock %}

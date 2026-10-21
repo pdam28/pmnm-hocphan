@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "_macros.html" import item_card, pagination %}
+
+{% block title %}Thực đơn{% endblock %}
+
+{% block content %}
+    <h1>Thực đơn ({{ total }} món)</h1>
+    <p>Trang {{ page }} / {{ pages }}</p>
+
+    <div class="menu-list">
+        {% for item in menu %}
+            {{ item_card(item) }}
+        {% else %}
+            <p>Chưa có món nào.</p>
+        {% endfor %}
+    </div>
+
+    {{ pagination(page, pages, 'index_menu') }}
+
+    <hr>
+    <p>Giá trung bình: <strong>{{ avg_price | vnd }}</strong></p>
+    <p>Số món đang có: <strong>{{ available_count }} món</strong></p>
+{% endblock %}
