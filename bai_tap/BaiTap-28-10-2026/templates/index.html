@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chương 5 - Xử lý dữ liệu Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px auto;
+            max-width: 650px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .nav-tabs {
+            display: flex;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 25px;
+            gap: 10px;
+        }
+        .nav-tabs a {
+            text-decoration: none;
+            padding: 10px 18px;
+            color: #555;
+            font-weight: bold;
+            border-radius: 6px 6px 0 0;
+            background-color: #eee;
+            transition: 0.2s;
+        }
+        .nav-tabs a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .error {
+            color: #d93025;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .result-box {
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #f1f3f4;
+            border-radius: 4px;
+            font-size: 17px;
+        }
+        .green { color: #2e7d32; font-weight: bold; }
+        .yellow { color: #e65100; font-weight: bold; }
+        .red { color: #c62828; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Nút chuyển Tab -->
+    <div class="nav-tabs">
+        <a href="?tab=bai1" class="{% if active_tab == 'bai1' %}active{% endif %}">Bài 1: Máy tính</a>
+        <a href="?tab=bai2" class="{% if active_tab == 'bai2' %}active{% endif %}">Bài 2: Điểm học phần</a>
+        <a href="?tab=bai3" class="{% if active_tab == 'bai3' %}active{% endif %}">Bài 3: Chỉ số BMI</a>
+    </div>
+
+    <!-- ==================== TAB 1 ==================== -->
+    {% if active_tab == 'bai1' %}
+    <h2>Bài 1: Máy tính cơ bản</h2>
+    <form method="POST" action="?tab=bai1">
+        <input type="hidden" name="form_type" value="bai1">
+        
+        <div class="form-group">
+            <label for="a">Số thứ nhất (a):</label>
+            <input type="text" id="a" name="a" value="{{ b1.a }}">
+            {% if b1.errors.a %}<div class="error">{{ b1.errors.a }}</div>{% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="op">Phép toán (op):</label>
+            <select id="op" name="op">
+                <option value="+" {% if b1.op == '+' %}selected{% endif %}>+</option>
+                <option value="-" {% if b1.op == '-' %}selected{% endif %}>-</option>
+                <option value="*" {% if b1.op == '*' %}selected{% endif %}>*</option>
+                <option value="/" {% if b1.op == '/' %}selected{% endif %}>/</option>
+            </select>
+            {% if b1.errors.op %}<div class="error">{{ b1.errors.op }}</div>{% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="b">Số thứ hai (b):</label>
+            <input type="text" id="b" name="b" value="{{ b1.b }}">
+            {% if b1.errors.b %}<div class="error">{{ b1.errors.b }}</div>{% endif %}
+        </div>
+
+        <button type="submit">Tính toán</button>
+    </form>
+
+    {% if b1.result %}
+        <div class="result-box"><strong>Kết quả:</strong> <span class="green">{{ b1.result }}</span></div>
+    {% endif %}
+    {% endif %}
+
+    <!-- ==================== TAB 2 ==================== -->
+    {% if active_tab == 'bai2' %}
+    <h2>Bài 2: Tính điểm học phần</h2>
+    <form method="POST" action="?tab=bai2">
+        <input type="hidden" name="form_type" value="bai2">
+
+        <div class="form-group">
+            <label for="cc">Điểm chuyên cần (10%):</label>
+            <input type="text" id="cc" name="cc" value="{{ b2.cc }}">
+            {% if b2.errors.cc %}<div class="error">{{ b2.errors.cc }}</div>{% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="gk">Điểm giữa kỳ (30%):</label>
+            <input type="text" id="gk" name="gk" value="{{ b2.gk }}">
+            {% if b2.errors.gk %}<div class="error">{{ b2.errors.gk }}</div>{% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="ck">Điểm cuối kỳ (60%):</label>
+            <input type="text" id="ck" name="ck" value="{{ b2.ck }}">
+            {% if b2.errors.ck %}<div class="error">{{ b2.errors.ck }}</div>{% endif %}
+        </div>
+
+        <button type="submit">Tính điểm</button>
+    </form>
+
+    {% if b2.result %}
+        <div class="result-box"><strong>Xếp loại:</strong> <span class="green">{{ b2.result }}</span></div>
+    {% endif %}
+    {% endif %}
+
+    <!-- ==================== TAB 3 ==================== -->
+    {% if active_tab == 'bai3' %}
+    <h2>Bài 3: Tính chỉ số BMI</h2>
+    <form method="POST" action="?tab=bai3">
+        <input type="hidden" name="form_type" value="bai3">
+
+        <div class="form-group">
+            <label for="height">Chiều cao (cm):</label>
+            <input type="text" id="height" name="height" value="{{ b3.height }}">
+            {% if b3.errors.height %}<div class="error">{{ b3.errors.height }}</div>{% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="weight">Cân nặng (kg):</label>
+            <input type="text" id="weight" name="weight" value="{{ b3.weight }}">
+            {% if b3.errors.weight %}<div class="error">{{ b3.errors.weight }}</div>{% endif %}
+        </div>
+
+        <button type="submit">Tính BMI</button>
+    </form>
+
+    {% if b3.result %}
+        <div class="result-box">
+            <span class="{{ b3.result.color }}">{{ b3.result.text }}</span>; nên có {{ b3.result.ideal }}
+        </div>
+    {% endif %}
+    {% endif %}
+</div>
+
+</body>
+</html>
